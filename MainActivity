@@ -1,0 +1,88 @@
+package com.example.app;
+ 
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.util.Log;
+import java.lang.Math
+ 
+public class MainActivity extends AppCompatActivity {
+    
+    Count count = new Count(1);
+    final static String countVariableKey = "COUNT_VARIABLE";
+    private final static String TAG = "MainActivity";
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        Log.d(TAG, "onCreate");
+    }
+
+    // сохранение состояния
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putSerializable(countVariableKey, count);
+        super.onSaveInstanceState(outState);
+        Log.d(TAG, "onSaveInstanceState");
+    }
+    
+    // получение ранее сохраненного состояния
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        // получаем объект Count в переменную
+        count = (Count)savedInstanceState.getSerializable(countVariableKey);
+        TextView dataView = findViewById(R.id.dataView);
+        dataView.setText(" Count: " + count.getValue());
+        Log.d(TAG, "onRestoreInstanceState");
+    }
+    
+    public void saveData(View view) {
+        int value = count.getValue();
+        int result = value + 1;
+        count.setValue(result);
+    }
+    
+    public void getData(View view) {
+        // получаем сохраненные данные
+        TextView dataView = findViewById(R.id.dataView);
+        dataView.setText(" Count: " + count.getValue());
+    }
+
+    public void onClick(View v) {
+        Intent intent = new Intent(this, SecondActivity.class);
+        intent.putExtra(Count.class.getSimpleName(), count);
+        startActivity(intent);
+    }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        Log.d(TAG, "onDestroy");
+    }
+    @Override
+    protected void onStop(){
+        super.onStop();
+        Log.d(TAG, "onStop");
+    }
+    @Override
+    protected void onStart(){
+        super.onStart();
+        Log.d(TAG, "onStart");
+    }
+    @Override
+    protected void onPause(){
+        super.onPause();
+        Log.d(TAG, "onPause");
+    }
+    @Override
+    protected void onResume(){
+        super.onResume();
+        Log.d(TAG, "onResume");
+    }
+    @Override
+    protected void onRestart(){
+        super.onRestart();
+        Log.d(TAG, "onRestart");
+    }
+}
