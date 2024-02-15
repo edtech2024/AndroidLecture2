@@ -1,0 +1,54 @@
+package com.example.app;
+ 
+import androidx.appcompat.app.AppCompatActivity;
+ 
+import android.os.Bundle;
+import android.widget.TextView;
+ 
+public class SecondActivity extends AppCompatActivity {
+ 
+    Count count = new Count(0);
+    final static String countVariableKey = "COUNT_VARIABLE";
+    
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        //setContentView(R.layout.activity_second);
+        TextView textView = new TextView(this);
+        textView.setTextSize(26);
+        textView.setPadding(16, 16, 16, 16);
+ 
+        Bundle arguments = getIntent().getExtras();
+ 
+        Count count;
+        if(arguments!=null){
+            count = (Count) arguments.getSerializable(Count.class.getSimpleName());
+            int value = count.getValue();
+            int result = Math.pow(value, 2); // возвращает число a, возведенное в степень b
+            textView.setText("Count: " + String.valueOf( count.setValue(result)));
+        }
+        setContentView(textView);
+    }
+
+    // сохранение состояния
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putSerializable(countVariableKey, count);
+        super.onSaveInstanceState(outState);
+        Log.d(TAG, "onSaveInstanceState");
+    }
+    
+    // получение ранее сохраненного состояния
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        // получаем объект Count в переменную
+        count = (Count)savedInstanceState.getSerializable(countVariableKey);
+        TextView dataView = findViewById(R.id.dataView);
+        dataView.setText(" Count: " + count.getValue());
+        Log.d(TAG, "onRestoreInstanceState");
+    }
+    
+}
+
+
