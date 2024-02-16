@@ -20,7 +20,6 @@ public class SecondActivity extends AppCompatActivity {
  
         Bundle arguments = getIntent().getExtras();
  
-        Count count;
         if(arguments!=null){
             count = (Count) arguments.getSerializable(Count.class.getSimpleName());
             int value = count.getValue();
