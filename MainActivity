@@ -16,6 +16,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d(TAG, "onCreate");
+        TextView dataView = findViewById(R.id.dataView);
+        dataView.setText(" Count: " + count.getValue());
     }
 
     // сохранение состояния
@@ -32,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
         super.onRestoreInstanceState(savedInstanceState);
         // получаем объект Count в переменную
         count = (Count)savedInstanceState.getSerializable(countVariableKey);
-        TextView dataView = findViewById(R.id.dataView);
         dataView.setText(" Count: " + count.getValue());
         Log.d(TAG, "onRestoreInstanceState");
     }
