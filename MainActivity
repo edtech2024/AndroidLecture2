@@ -47,20 +47,6 @@ public class MainActivity extends AppCompatActivity {
         dataView.setText(" Count: " + count.getValue());
     }
 
-    /*
-    public void saveData(View view) {
-        int value = count.getValue();
-        int result = value + 1;
-        count.setValue(result);
-    }
-    
-    public void getData(View view) {
-        // получаем сохраненные данные
-        TextView dataView = findViewById(R.id.dataView);
-        dataView.setText(" Count: " + count.getValue());
-    }
-    */
-
     public void onClick(View v) {
         Intent intent = new Intent(this, SecondActivity.class);
         intent.putExtra(Count.class.getSimpleName(), count);
