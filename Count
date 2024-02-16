@@ -2,10 +2,8 @@ package com.example.app;
  
 import java.io.Serializable;
  
-//User==count 
 public class Count implements Serializable {
  
-    //value==age
     private int value;
  
     public Count(int value){
