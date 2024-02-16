@@ -36,7 +36,17 @@ public class MainActivity extends AppCompatActivity {
         dataView.setText(" Count: " + count.getValue());
         Log.d(TAG, "onRestoreInstanceState");
     }
-    
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        int value = count.getValue();
+        int result = value + 1;
+        count.setValue(result);
+        dataView.setText(" Count: " + count.getValue());
+    }
+
+    /*
     public void saveData(View view) {
         int value = count.getValue();
         int result = value + 1;
@@ -48,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         TextView dataView = findViewById(R.id.dataView);
         dataView.setText(" Count: " + count.getValue());
     }
+    */
 
     public void onClick(View v) {
         Intent intent = new Intent(this, SecondActivity.class);
