@@ -1,86 +1,79 @@
-package com.example.app;
- 
-import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
-import java.lang.Math;
- 
-public class MainActivity extends AppCompatActivity {
-    
-    Count count = new Count(1);
-    final static String countVariableKey = "COUNT_VARIABLE";
-    private final static String TAG = "MainActivity";
+package com.example.myapplicationtwo
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Log.d(TAG, "onCreate");
-        TextView dataView = findViewById(R.id.dataView);
-        dataView.setText(" Count: " + count.getValue());
+import android.content.Intent
+import android.os.Bundle
+import android.util.Log
+import android.view.View
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+
+
+class MainActivity : AppCompatActivity() {
+
+    private val TAG = "MainActivity"
+    var count: Int = 0
+    private val countVariableKey = "COUNT_VARIABLE"
+    var dataView: TextView? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        Log.d(TAG, "onCreate")
+        dataView = findViewById<TextView>(R.id.dataView)
+        dataView!!.text = " Count: " + count
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.d(TAG, "onStart")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d(TAG, "onResume")
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        Log.d(TAG, "onRestart")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d(TAG, "onPause")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d(TAG, "onStop")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d(TAG, "onDestroy")
     }
 
     // сохранение состояния
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        outState.putSerializable(countVariableKey, count);
-        super.onSaveInstanceState(outState);
-        Log.d(TAG, "onSaveInstanceState");
+    override fun onSaveInstanceState(outState: Bundle) {
+        count += 1
+        outState.putSerializable(countVariableKey, count)
+        super.onSaveInstanceState(outState)
+        Log.d(TAG, "onSaveInstanceState")
     }
-    
+
     // получение ранее сохраненного состояния
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        // получаем объект Count в переменную
-        count = (Count)savedInstanceState.getSerializable(countVariableKey);
-        dataView.setText(" Count: " + count.getValue());
-        Log.d(TAG, "onRestoreInstanceState");
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        count = savedInstanceState.getInt(countVariableKey)
+        dataView?.setText(" Count: " + count)
+        Log.d(TAG, "onRestoreInstanceState")
     }
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        int value = count.getValue();
-        int result = value + 1;
-        count.setValue(result);
-        dataView.setText(" Count: " + count.getValue());
+    fun onClick(view: View) {
+        val intent = Intent(this, SecondActivity::class.java)
+        intent.putExtra(countVariableKey, count);
+        startActivity(intent)
     }
 
-    public void onClick(View v) {
-        Intent intent = new Intent(this, SecondActivity.class);
-        intent.putExtra(Count.class.getSimpleName(), count);
-        startActivity(intent);
-    }
-
-    @Override
-    protected void onDestroy(){
-        super.onDestroy();
-        Log.d(TAG, "onDestroy");
-    }
-    @Override
-    protected void onStop(){
-        super.onStop();
-        Log.d(TAG, "onStop");
-    }
-    @Override
-    protected void onStart(){
-        super.onStart();
-        Log.d(TAG, "onStart");
-    }
-    @Override
-    protected void onPause(){
-        super.onPause();
-        Log.d(TAG, "onPause");
-    }
-    @Override
-    protected void onResume(){
-        super.onResume();
-        Log.d(TAG, "onResume");
-    }
-    @Override
-    protected void onRestart(){
-        super.onRestart();
-        Log.d(TAG, "onRestart");
-    }
 }
+
